@@ -21,9 +21,12 @@
     <meta property="og:type" content="website">
 <body>
     <header id="header">
-        <video id="background-video" src="https://dl.dropboxusercontent.com/scl/fi/9afn06iheh0bwor68ifes/background-video.mp4?rlkey=ha4jhpnccydpu2szikr0srye8&st=iog3d7hj" type="video/mp4" autoplay muted loop>
-            Dein Browser unterstützt das Video-Tag nicht.
-        </video>
+        <div class="video-loading" id="video-loading">
+            <div class="loader"></div>
+            <p>Lade Highlights...</p>
+        </div>
+        <div id="video-container"></div>
+        <div class="video-overlay"></div>
         <h1 class="player-name">F7RKY</h1>
         <p class="player-tagline">11.000+ Stunden, 18 Turniersiege und mehr!</p>
         <div class="socials">
@@ -36,6 +39,20 @@
             <a href="https://www.tiktok.com/@f7rkyrl/" class="social-link">
                 <i class="fab fa-tiktok"></i>
             </a>
+        </div>
+        <div class="video-controls">
+            <button class="video-btn" id="pause-btn" title="Video pausieren">
+                <i class="fas fa-pause"></i>
+            </button>
+            <button class="video-btn" id="mute-btn" title="Ton an/aus">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <button class="video-btn" id="hide-btn" title="Video ausblenden">
+                <i class="fas fa-eye-slash"></i>
+            </button>
+            <button class="video-btn" id="show-btn" title="Video einblenden" style="display: none;">
+                <i class="fas fa-eye"></i>
+            </button>
         </div>
     </header>
     <section class="content-section">
@@ -97,7 +114,7 @@
         <div>
             <a class="linkout nodecoration" href="https://itsmarian.is-a.dev/legal/privacy" target="_blank">Privacy Policy</a>
             <a>•</a>
-            <a class="linkout nodecoration" href="https://support.itsmarian.is-a.dev/?utm_origin=F7RKY&utm_page=index&page_pos=footer" target="_blank">Support</a>
+            <a class="linkout nodecoration" href="https://support.itsmarian.is-a.dev/?utm_origin=https://f7rky.github.io/&utm_page=index&page_pos=footer" target="_blank">Support</a>
             <a>•</a>
             <a class="linkout nodecoration" href="https://itsmarian.is-a.dev/legal/terms" target="_blank">Terms of Use</a>
         </div>

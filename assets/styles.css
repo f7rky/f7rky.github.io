@@ -32,6 +32,49 @@ body {
 	opacity: 0.4;
 }
 
+.video-controls {
+	position: absolute;
+	bottom: 30px;
+	right: 30px;
+	display: flex;
+	gap: 10px;
+	z-index: 10;
+}
+
+.video-btn {
+	background-color: rgba(0, 0, 0, 0.6);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	color: white;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	font-size: 1rem;
+}
+
+.video-btn:hover {
+	background-color: rgba(255, 138, 0, 0.8);
+	transform: scale(1.1);
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255,138,0,0.3);
+    border-radius: 50%;
+    border-top-color: #ff8a00;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 20px;
+}
+        
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 .player-name {
 	font-size: 4.5rem;
 	font-weight: 700;
