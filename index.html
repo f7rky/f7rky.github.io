@@ -20,23 +20,32 @@
     <meta property="og:url" content="">
     <meta property="og:type" content="website">
 <body>
-    <header id="header">
-        <div class="video-loading" id="video-loading">
-            <div class="loader"></div>
-            <p>Lade Highlights...</p>
+    <div class="video-loading" id="video-loading">
+        <div class="loader">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
         </div>
-        <div id="video-container"></div>
-        <div class="video-overlay"></div>
+        <p>Initializing site, this should not take long...</p>
+    </div>
+    <div id="video-container"></div>
+    <div class="video-overlay"></div>
+    <header id="header">
         <h1 class="player-name">F7RKY</h1>
         <p class="player-tagline">11.000+ Stunden, 18 Turniersiege und mehr!</p>
         <div class="socials">
-            <a href="https://discord.com/users/1158514572609724518/" class="social-link">
+            <a href="https://discord.gg/g55v8R4dsY/?utm_src=https://f7rky.github.io/&utm_campaign=socials_social-link_linkout&social_type=discord" class="social-link" target="_blank">
                 <i class="fab fa-discord"></i>
             </a>
-            <a href="https://www.instagram.com/furkxn.08/" class="social-link">
+            <a href="https://www.instagram.com/furkxn.08/?utm_src=https://f7rky.github.io/&utm_campaign=socials_social-link_linkout&social_type=instagram" class="social-link" target="_blank">
                 <i class="fab fa-instagram"></i>
             </a>
-            <a href="https://www.tiktok.com/@f7rkyrl/" class="social-link">
+            <a href="https://www.tiktok.com/@f7rkyrl/?utm_src=https://f7rky.github.io/&utm_campaign=socials_social-link_linkout&social_type=tiktok" class="social-link" target="_blank">
                 <i class="fab fa-tiktok"></i>
             </a>
         </div>
@@ -44,7 +53,7 @@
             <button class="video-btn" id="pause-btn" title="Video pausieren">
                 <i class="fas fa-pause"></i>
             </button>
-            <button class="video-btn" id="mute-btn" title="Ton an/aus">
+            <button class="video-btn isHidden" id="mute-btn" title="Ton an/aus">
                 <i class="fas fa-volume-up"></i>
             </button>
             <button class="video-btn" id="hide-btn" title="Video ausblenden">

@@ -20,8 +20,12 @@ document.addEventListener('DOMContentLoaded', function() {
             showBtn.style.display = 'flex';
             pauseBtn.classList.add('disabled');
             muteBtn.classList.add('disabled');
+            console.log('[info@dev] Initialized successfully\n[info@dev] Type: Video Hidden')
         } else {
+            videoLoading.style.display = 'flex';
+            videoLoading.style.opacity = '1';
             createAndLoadVideo();
+            console.log('[info@dev] Initialized successfully\n[info@dev] Type: Video Visible')
         }
     }
     
@@ -33,23 +37,22 @@ document.addEventListener('DOMContentLoaded', function() {
         
         currentVideo = document.createElement('video');
         currentVideo.id = 'background-video';
-        currentVideo.muted = isMuted;
-        currentVideo.loop = true;
 		currentVideo.autoplay = true;
+        currentVideo.loop = true;
+        currentVideo.muted = isMuted;
+        currentVideo.playsInline = true;
+        currentVideo.playsinline = true;
+        currentVideo.style.height = '100%';
+        currentVideo.style.left = '0';
+        currentVideo.style.objectFit = 'cover';
+        currentVideo.style.opacity = '0';
         currentVideo.style.position = 'absolute';
         currentVideo.style.top = '0';
-        currentVideo.style.left = '0';
-        currentVideo.style.width = '100%';
-        currentVideo.style.height = '100%';
-        currentVideo.style.objectFit = 'cover';
-        currentVideo.style.zIndex = '-1';
-        currentVideo.style.opacity = '0';
         currentVideo.style.transition = 'opacity 1s ease';
+        currentVideo.style.width = '100%';
+        currentVideo.style.zIndex = '-1';
         
         videoContainer.appendChild(currentVideo);
-        
-        videoLoading.style.display = 'flex';
-        videoLoading.style.opacity = '1';
         
         currentVideo.src = videoSource;
         currentVideo.load();
@@ -174,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
         isMuted = savedMute === 'true';
     }
     
-    initializeVideo();
     
     const observerOptions = {
         threshold: 0.1,
@@ -197,4 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
         el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         observer.observe(el);
     });
+
+    initializeVideo();
 });
