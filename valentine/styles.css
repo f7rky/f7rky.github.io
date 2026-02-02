@@ -228,7 +228,7 @@ button {
 
     .popup-image {
         position: fixed;
-        width: 133px;
+        width: 100px;
         aspect-ratio: 9 / 16;
         border-radius: 20px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
