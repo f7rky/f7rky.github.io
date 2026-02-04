@@ -60,7 +60,6 @@ a {
 }
 
 footer {
-	background: var(--bg);
 	border-radius: 10px;
 	bottom: 0;
 	color: var(--txt-2) !important;

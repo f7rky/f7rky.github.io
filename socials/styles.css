@@ -23,6 +23,8 @@ body {
 	background: var(--bg);
 	min-height: 100vh;
 	display: flex;
+	justify-content: space-between;
+	gap: 0px !important;
 	flex-direction: column;
 }
 
@@ -32,9 +34,12 @@ body {
 	width: 100%;
 }
 
+#video-container, .video-controls, .video-overlay {
+    position: fixed;
+}
+
 main {
 	padding: 10px;
-	flex: 1;
 }
 
 .social-tree-container {
@@ -296,7 +301,7 @@ footer {
 	background: transparent !important;
 	border-radius: 0px !important;
 	gap: 0px !important;
-	margin-top: auto;
+	margin-top: 10vh;
 	position: relative;
 	padding: 0px;
 }
@@ -319,5 +324,9 @@ footer {
 @media (max-width: 600px) {
 	.st-element {
 		margin: 0px 5px;
+	}
+
+	.header-description a {
+		font-size: 1rem;
 	}
 }

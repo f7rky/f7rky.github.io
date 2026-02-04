@@ -292,34 +292,6 @@ body {
     margin-bottom: 0.5rem;
 }
 
-footer {
-	background: #0a0a0a !important;
-	border-radius: 10px;
-	bottom: 0;
-	display: flex;
-	flex-direction: column;
-	font-size: 1rem;
-	gap: 7.5px;
-	margin-top: auto;
-	padding: 1rem 0;
-	position: relative;
-	text-align: center;
-	width: 100%;
-}
-
-footer .linkout,
-footer .nodecoration,
-footer .linkout.nodecoration {
-	color: hsl(220, 14%, 55%);
-}
-
-footer a,
-footer p {
-	color: hsl(220, 14%, 55%);
-	text-decoration: none;
-	transition: all 0.3s ease;
-}
-
 @media (max-width: 768px) {
     .player-name {
         font-size: 3rem;

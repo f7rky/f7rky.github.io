@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
             pauseBtn.classList.add('disabled');
             muteBtn.classList.add('disabled');
             
-            // Wallpaper anzeigen
             if (wallpaperImage) {
                 wallpaperImage.style.display = 'block';
                 setTimeout(() => {
@@ -91,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function() {
         currentVideo.src = videoSource;
         currentVideo.load();
         
-        // Wallpaper ausblenden
         if (wallpaperImage) {
             wallpaperImage.style.opacity = '0';
             setTimeout(() => {
@@ -104,12 +102,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         currentVideo.addEventListener('error', function(e) {
-            videoLoading.innerHTML = '<p>Video konnte nicht geladen werden.</p>';
+            videoLoading.innerHTML = '<p>Could not load video. Try again or switch to wallpaper!</p>';
+            console.log(`[info@dev] Video playback failed\n[info@dev] Error: ${e}`)
             setTimeout(function() {
                 videoLoading.style.opacity = '0';
                 setTimeout(function() {
                     videoLoading.style.display = 'none';
-                    // Bei Video-Fehler Wallpaper anzeigen
                     showWallpaperAsFallback();
                 }, 500);
             }, 3000);
@@ -117,7 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         setTimeout(function() {
             if (currentVideo && currentVideo.readyState < 3) {
-                videoLoading.innerHTML = '<p>Video lädt langsam. Seite ist trotzdem nutzbar.</p>';
+                videoLoading.innerHTML = '<p>Video is loading lazy!</p>';
+                console.log('[info@dev] Could not load video\n[info@dev] Showing wallpaper image!')
+                showWallpaperAsFallback()
                 setTimeout(function() {
                     if (currentVideo && !isVideoHidden) {
                         showVideoContent();
@@ -144,6 +144,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function showWallpaperAsFallback() {
         if (wallpaperImage) {
+            hdieBtn.style.display = "none";
+            showBtn.style.display = "block";
             wallpaperImage.style.display = 'block';
             wallpaperImage.style.opacity = '0.4';
         }
