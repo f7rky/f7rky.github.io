@@ -203,7 +203,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 500);
         }
         
-        // Wallpaper anzeigen
         if (wallpaperImage) {
             wallpaperImage.style.display = 'block';
             setTimeout(() => {
@@ -221,7 +220,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function showVideo() {
-        // Wallpaper ausblenden
         if (wallpaperImage) {
             wallpaperImage.style.opacity = '0';
             setTimeout(() => {
@@ -229,7 +227,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 500);
         }
         
-        // Video wieder anzeigen
         if (currentVideo) {
             currentVideo.style.display = 'block';
             setTimeout(() => {
