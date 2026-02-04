@@ -14,6 +14,10 @@ document.getElementById("linkid=fdp329jm").addEventListener("click", function() 
 	window.open("https://discord.gg/hdMzYKkXxw", "_blank")
 });
 
+document.getElementById("linkid=73jm315d").addEventListener("click", function() {
+	window.open("https://www.instagram.com/f7rkyrl/", "_blank")
+});
+
 document.getElementById("linkid=sS7hJnkH").addEventListener("click", function() {
 	window.open("https://open.spotify.com/playlist/76DhwtRMaJYEItB6siGSfm", "_blank")
 });
