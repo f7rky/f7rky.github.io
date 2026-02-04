@@ -11,6 +11,12 @@ body {
     overflow-x: hidden;
 }
 
+.fade-in {
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, var(--bg) 100%);
+	height: 50px;
+	width: 100%;
+}
+
 .isHidden {
 	display: none !important;
 	opacity: 0 !important;
@@ -137,12 +143,16 @@ body {
 
 .socials {
     display: flex;
-    gap: 1.5rem;
-    margin-top: 2rem;
+    flex-direction: column;
+}
+
+.socials p, .socials a {
+    font-size: 15px;
 }
 
 .social-link {
-    color: #f0f0f0;
+    color: #fff;
+    fill: #fff;
     font-size: 1.8rem;
     transition: all 0.3s ease;
     text-decoration: none;
@@ -151,6 +161,7 @@ body {
 .social-link:hover {
     transform: translateY(-5px);
     color: #ff8a00;
+    fill: #ff8a00;
 }
 
 .video-controls {

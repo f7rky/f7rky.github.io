@@ -28,12 +28,6 @@ body {
 	flex-direction: column;
 }
 
-.fade-in {
-	background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, var(--bg) 100%);
-	height: 50px;
-	width: 100%;
-}
-
 #video-container, .video-controls, .video-overlay {
     position: fixed;
 }
