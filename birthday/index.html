@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>For You 💌</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--pink-bg: #f6d9de;
+			--pink-bg-soft: #f9e6ea;
+			--navbar-pink: #f2c9d1;
+			--cream: #fffaf7;
+			--white: #ffffff;
+			--note-bg: #fdeef1;
+			--dark-red: #9c2b3c;
+			--magenta: #c23a56;
+			--magenta-dark: #a8283f;
+			--border-thin: #e0a4b0;
+			--shadow: 0 20px 50px -15px rgba(156, 43, 60, 0.35);
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			min-height: 100vh;
+			background: radial-gradient(circle at 20% 10%, var(--pink-bg-soft), var(--pink-bg) 60%);
+			font-family: 'Playfair Display', serif;
+			color: var(--dark-red);
+			-webkit-font-smoothing: antialiased;
+		}
+
+		h1,
+		h2,
+		h3,
+		.script {
+			font-family: 'Dancing Script', cursive;
+		}
+
+		::selection {
+			background: var(--magenta);
+			color: #fff;
+		}
+
+		#login-screen {
+			position: fixed;
+			inset: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: var(--pink-bg);
+			background-image:
+				radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.5), transparent 40%),
+				radial-gradient(circle at 85% 80%, rgba(255, 255, 255, 0.4), transparent 45%);
+			transition: opacity 0.7s ease, visibility 0.7s ease;
+			z-index: 100;
+			padding: 20px;
+		}
+
+		#login-screen.hidden {
+			opacity: 0;
+			visibility: hidden;
+			pointer-events: none;
+		}
+
+		.login-card {
+			background: var(--cream);
+			border-radius: 30px;
+			padding: 48px 40px;
+			max-width: 380px;
+			width: 100%;
+			text-align: center;
+			box-shadow: var(--shadow);
+			border: 1px solid rgba(194, 58, 86, 0.08);
+		}
+
+		.login-card .heart-deco {
+			font-size: 1.6rem;
+			margin-bottom: 6px;
+			opacity: 0.8;
+		}
+
+		.login-card h1 {
+			font-size: 2.4rem;
+			color: var(--magenta-dark);
+			margin: 0 0 28px;
+			font-weight: 700;
+		}
+
+		#login-form {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+		}
+
+		#code-input {
+			padding: 14px 18px;
+			border-radius: 16px;
+			border: 1.5px solid var(--magenta);
+			background: #fff;
+			font-family: 'Playfair Display', serif;
+			font-size: 1rem;
+			color: var(--dark-red);
+			outline: none;
+			text-align: center;
+			letter-spacing: 2px;
+			transition: box-shadow 0.25s ease, border-color 0.25s ease;
+		}
+
+		#code-input:focus {
+			box-shadow: 0 0 0 4px rgba(194, 58, 86, 0.15);
+		}
+
+		#enter-btn {
+			padding: 14px 18px;
+			border: none;
+			border-radius: 16px;
+			background: var(--magenta);
+			color: #fff;
+			font-family: 'Playfair Display', serif;
+			font-weight: 600;
+			letter-spacing: 0.5px;
+			font-size: 1rem;
+			cursor: pointer;
+			transition: background 0.25s ease, transform 0.2s ease;
+		}
+
+		#enter-btn:hover {
+			background: var(--magenta-dark);
+			transform: translateY(-2px);
+		}
+
+		#enter-btn:active {
+			transform: translateY(0);
+		}
+
+		.login-hint {
+			margin-top: 18px;
+			font-size: 0.8rem;
+			color: #c47f8b;
+			min-height: 1.2em;
+		}
+
+		.login-tip {
+			margin-top: 14px;
+			font-size: 0.82rem;
+			color: #b06776;
+			font-style: italic;
+		}
+
+		#main-site {
+			display: none;
+			max-width: 900px;
+			margin: 0 auto;
+			padding: 12px 10px 30px;
+			animation: fadeIn 0.8s ease;
+		}
+
+		#main-site.visible {
+			display: block;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(12px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		nav.navbar {
+			background: var(--navbar-pink);
+			border-radius: 28px;
+			padding: 14px;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			justify-content: center;
+			position: relative;
+			overflow: hidden;
+			box-shadow: 0 10px 30px -10px rgba(156, 43, 60, 0.25);
+		}
+
+		nav.navbar::before,
+		nav.navbar::after {
+			content: "♥";
+			position: absolute;
+			color: rgba(255, 255, 255, 0.55);
+			font-size: 1.4rem;
+			pointer-events: none;
+		}
+
+		nav.navbar::before {
+			top: 3px;
+			left: 9px;
+		}
+
+		nav.navbar::after {
+			bottom: 2px;
+			right: 11px;
+			font-size: 1.1rem;
+		}
+
+		.tab-btn {
+			background: #fff;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 999px;
+			font-family: 'Playfair Display', serif;
+			font-weight: 600;
+			font-size: 0.92rem;
+			color: var(--dark-red);
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+			box-shadow: 0 2px 6px rgba(156, 43, 60, 0.08);
+		}
+
+		.tab-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 14px rgba(156, 43, 60, 0.18);
+		}
+
+		.tab-btn.active {
+			background: var(--magenta);
+			color: #fff;
+		}
+
+		.tab-btn:disabled {
+			cursor: not-allowed;
+			opacity: 0.65;
+			pointer-events: none;
+		}
+
+		.tab-btn:disabled:hover {
+			transform: none;
+			box-shadow: 0 2px 6px rgba(156, 43, 60, 0.08);
+		}
+
+		.tab-btn.active:disabled {
+			opacity: 1;
+		}
+
+		.content-card {
+			background: var(--white);
+			border-radius: 30px;
+			margin-top: 22px;
+			padding: 40px 36px;
+			min-height: 420px;
+			box-shadow: var(--shadow);
+		}
+
+		.content-card h2 {
+			font-size: 2.3rem;
+			color: var(--magenta-dark);
+			margin: 0 0 24px;
+		}
+
+		.tab-panel {
+			display: none;
+			animation: fadeIn 0.5s ease;
+		}
+
+		.tab-panel.active {
+			display: block;
+		}
+
+		.letter-box {
+			border: 1.5px dashed var(--border-thin);
+			border-radius: 20px;
+			padding: 28px 26px;
+			background: var(--note-bg);
+		}
+
+		.letter-box h3 {
+			margin: 0 0 14px;
+			color: var(--magenta);
+			font-size: 1.5rem;
+		}
+
+		.letter-box p {
+			font-family: 'Playfair Display', serif;
+			font-style: italic;
+			line-height: 1.85;
+			color: #6d2431;
+			margin: 0 0 14px;
+		}
+
+		.letter-box p:last-child {
+			margin-bottom: 0;
+		}
+
+		.signoff {
+			text-align: right;
+			font-family: 'Dancing Script', cursive;
+			font-size: 1.6rem;
+			color: var(--magenta-dark);
+			margin-top: 18px;
+		}
+
+		.note-list {
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+		}
+
+		.note-card {
+			background: var(--note-bg);
+			border: 1.5px solid var(--magenta);
+			border-radius: 18px;
+			padding: 16px 20px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			font-size: 1.05rem;
+			color: var(--dark-red);
+			transition: transform 0.2s ease, box-shadow 0.2s ease;
+		}
+
+		.note-card:hover {
+			transform: translateX(4px);
+			box-shadow: 0 6px 16px rgba(156, 43, 60, 0.15);
+		}
+
+		.note-card .icon {
+			font-size: 1.2rem;
+		}
+
+		.song-list {
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+		}
+
+		.song-card {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			background: var(--note-bg);
+			border-radius: 18px;
+			padding: 16px 20px;
+			border: 1.5px solid transparent;
+			transition: border-color 0.25s ease, transform 0.2s ease;
+		}
+
+		.song-card:hover {
+			border-color: var(--magenta);
+			transform: translateX(4px);
+		}
+
+		.song-note {
+			font-size: 1.5rem;
+			color: var(--magenta);
+			flex-shrink: 0;
+		}
+
+		.song-info .song-title {
+			font-weight: 600;
+			font-size: 1.05rem;
+			color: var(--dark-red);
+		}
+
+		.song-info .song-artist {
+			font-size: 0.88rem;
+			color: #b06776;
+			font-style: italic;
+		}
+
+		.gallery-marquee {
+			position: relative;
+			overflow: hidden;
+			border-radius: 15px;
+			-webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+			mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+		}
+
+		.gallery-track {
+			display: flex;
+			align-items: center;
+			gap: 18px;
+			width: max-content;
+			animation: marquee 32s linear infinite;
+		}
+
+		.gallery-marquee:hover .gallery-track {
+			animation-play-state: paused;
+		}
+
+		.gallery-track .gallery-item {
+			flex: 0 0 auto;
+			width: 260px;
+			height: 200px;
+			border-radius: 15px;
+			overflow: hidden;
+			box-shadow: 0 8px 20px rgba(156, 43, 60, 0.18);
+			transition: transform 0.3s ease;
+		}
+
+		.gallery-track .gallery-item:hover {
+			transform: scale(1.03);
+		}
+
+		.gallery-track .gallery-item img,
+		.gallery-track .gallery-item video {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			border-radius: 15px;
+		}
+
+		@keyframes marquee {
+			from {
+				transform: translateX(0);
+			}
+
+			to {
+				transform: translateX(-50%);
+			}
+		}
+
+		@media (max-width: 720px) {
+			.gallery-track .gallery-item {
+				width: 200px;
+				height: 160px;
+			}
+		}
+
+		@media (max-width: 460px) {
+			.content-card {
+				padding: 28px 20px;
+			}
+
+			.tab-btn {
+				font-size: 0.85rem;
+				padding: 9px 14px;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+
+			* {
+				animation: none !important;
+				transition: none !important;
+			}
+
+			.gallery-track {
+				overflow-x: auto;
+			}
+		}
+		.next-btn {
+			background: var(--magenta);
+			color: #fff;
+			border: none;
+			padding: 12px 26px;
+			border-radius: 999px;
+			font-family: 'Playfair Display', serif;
+			font-weight: 600;
+			font-size: 0.95rem;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			box-shadow: 0 6px 16px rgba(156, 43, 60, 0.25);
+			transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+		}
+
+		.next-btn:hover {
+			background: var(--magenta-dark);
+			transform: translateY(-2px);
+			box-shadow: 0 8px 20px rgba(156, 43, 60, 0.32);
+		}
+
+		.next-btn:active {
+			transform: translateY(0);
+		}
+
+		.surprise-btn-wrap {
+			display: flex;
+			justify-content: center;
+			margin-top: 24px;
+		}
+
+		.popup-image {
+			position: fixed;
+			width: 200px;
+			aspect-ratio: 9 / 16;
+			object-fit: cover;
+			border-radius: 20px;
+			box-shadow: 0 10px 30px rgba(156, 43, 60, 0.35);
+			border: 5px solid #fff;
+			z-index: 500;
+			pointer-events: none;
+			animation: popupIn 0.5s ease-out both, popupOut 0.6s ease-in 44.5s both;
+		}
+
+		@keyframes popupIn {
+			0% {
+				transform: scale(0) rotate(-180deg);
+				opacity: 0;
+			}
+
+			100% {
+				transform: scale(1) rotate(0deg);
+				opacity: 1;
+			}
+		}
+
+		@keyframes popupOut {
+			to {
+				opacity: 0;
+				transform: scale(0.85);
+			}
+		}
+
+		.falling-heart {
+			position: fixed;
+			pointer-events: none;
+			z-index: 500;
+		}
+
+		.video-overlay {
+			display: none;
+			position: fixed;
+			inset: 0;
+			background: rgba(40, 10, 18, 0.88);
+			z-index: 900;
+			justify-content: center;
+			align-items: center;
+			padding: 24px;
+		}
+
+		.video-overlay.visible {
+			display: flex;
+		}
+
+		.video-container {
+			position: relative;
+			width: 100%;
+			max-width: 420px;
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+		}
+
+		.video-container video {
+			width: 100%;
+			max-height: 70vh;
+			border-radius: 24px;
+			box-shadow: var(--shadow);
+			display: block;
+			background: #000;
+		}
+
+		.video-meta {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 14px;
+		}
+
+		#videoCounter {
+			color: #fff;
+			font-family: 'Playfair Display', serif;
+			font-size: 0.9rem;
+			opacity: 0.85;
+		}
+
+		.close-video {
+			position: absolute;
+			top: -16px;
+			right: -16px;
+			background: var(--magenta);
+			color: #fff;
+			border: none;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+			transition: background 0.25s ease, transform 0.2s ease;
+		}
+
+		.close-video:hover {
+			background: var(--magenta-dark);
+			transform: scale(1.1);
+		}
+
+        .next-btn-wrap {
+            margin-top: 1rem;
+        }
+
+		@media (max-width: 460px) {
+			.popup-image {
+				width: 120px;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.popup-image {
+				animation: none;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="login-screen">
+		<div class="login-card">
+			<div class="heart-deco">❤️</div>
+			<h1 class="script">Enter the secret code</h1>
+			<form id="login-form">
+				<input type="text" id="code-input" placeholder="TT.MM" autocomplete="off" maxlength="5" inputmode="numeric" required>
+				<button type="submit" id="enter-btn">Enter</button>
+			</form>
+			<div class="login-tip">💡 Tipp: der Tag, an dem alles begann...</div>
+			<div class="login-hint" id="login-hint"></div>
+		</div>
+	</div>
+	<div id="main-site">
+		<nav class="navbar">
+			<button class="tab-btn active" data-tab="letter" disabled>❤️ Love Letter</button>
+			<button class="tab-btn" data-tab="notes" disabled>📝 Notes</button>
+			<button class="tab-btn" data-tab="gallery" disabled>🌷 Gallery</button>
+		</nav>
+		<div class="content-card">
+			<section class="tab-panel active" id="panel-letter">
+				<h2 class="script">My Dearest</h2>
+				<div class="letter-box">
+					<h3 class="script">A Letter For You</h3>
+					<p>BABYYYY Alles Gute zum 19. Geburtstag mein Herz ❤️</p>
+					<p>Ich hoffe du hast einen richtig schönen Tag und feierst in Marokko trotzdem schön auch wenn ich heute nicht bei dir sein kann Ich vermisse dich so krank mann und freue mich schon so sehr wenn wir uns endlich wiedersehen können und ich dich wieder in den Arm nehmen kann bebiiii undddd</p>
+					<p>Du hast die schönsten Augen die ich je gesehen habe Jedes Mal wenn ich dich anschaue werde ich einfach glücklich und könnte stundenlang in deine Augen schauen Liebe es wenn du glücklich bist deine Augen funkeln so krank du weißt nicht mannnn</p>
+					<p>Danke dass du immer für mich da bist und mich jeden Tag zum Lächeln bringst Ich bin so froh dass wir uns gefunden haben und jetzt schon über 2 Jahre zusammen sind 🥹 Die Zeit mit dir ist einfach die schönste und ich freue mich auf alles was noch vor uns liegt</p>
+                    <br>
+                    <p>Genieß deinen Tag Askitomm und hab ganz viel Spaß Ich hoffe wir sehen uns ganz bald wiederrrr :(</p>
+                    <br>
+                    <div class="signoff">Ich liebe dich von ganzem Herzen mein Kampfzwerggg ❤️</div>
+				</div>
+				<div class="next-btn-wrap">
+					<button class="next-btn" data-next="notes">Weiter ❤️</button>
+				</div>
+			</section>
+			<section class="tab-panel" id="panel-music">
+				<h2 class="script">Songs that remind me of you</h2>
+				<div class="song-list">
+					<div class="song-card">
+						<span class="song-note">🎵</span>
+						<div class="song-info">
+							<div class="song-title">Hiwaga</div>
+							<div class="song-artist">Tatin DC</div>
+						</div>
+					</div>
+					<div class="song-card">
+						<span class="song-note">🎵</span>
+						<div class="song-info">
+							<div class="song-title">Wish</div>
+							<div class="song-artist">16</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="tab-panel" id="panel-notes">
+				<h2 class="script">Some reminders</h2>
+				<div class="note-list">
+                    <div class="note-card"><span class="icon">🐟❤️</span> Mein süßer kleiner Fisch</div>
+                    <div class="note-card"><span class="icon">😍</span> Die schönste Frau auf Erden</div>
+                    <div class="note-card"><span class="icon">🤩</span> Atemberaubende Augen</div>
+                    <div class="note-card"><span class="icon">🥹</span> Unbeschreiblich süß</div>
+                    <div class="note-card"><span class="icon">❤️</span> Mein Ein und Alles</div>
+                    <div class="note-card"><span class="icon">🥰</span> Zum Aufessen süß</div>
+                    <div class="note-card"><span class="icon">😂❤️</span> Manchmal aggressiv</div>
+                    <div class="note-card"><span class="icon">♾️🫶</span> Für immer und ewig</div>
+                </div>
+				<div class="next-btn-wrap">
+					<button class="next-btn" data-next="gallery">Weiter ❤️</button>
+				</div>
+			</section>
+			<section class="tab-panel" id="panel-gallery">
+				<h2 class="script">Remember this...</h2>
+				<div class="letter-box">
+                    <p>Unsere schönsten Momente und Erinnerungen</p>
+				</div>
+				<div class="surprise-btn-wrap">
+					<button class="next-btn" id="surpriseBtn">🎬 Überraschung ansehen</button>
+				</div>
+			</section>
+		</div>
+    </div>
+	<div class="video-overlay" id="videoOverlay">
+		<div class="video-container">
+			<button class="close-video" id="closeVideo" aria-label="Schließen">
+				<svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 -960 960 960" width="18" fill="#fff">
+					<path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+				</svg>
+			</button>
+			<video id="loveVideo" autoplay loop playsinline>
+				<source id="loveVideoSource" src="/birthday/videos/9581409d-615f-47cf-ba06-43b446d77b0d.mp4" type="video/mp4">
+				Dein Browser unterstützt das Videoformat leider nicht.
+			</video>
+			<div class="video-meta">
+				<span id="videoCounter">1 / 4</span>
+				<button class="next-btn" id="nextVideoBtn">Weiter ❤️</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const SECRET_DATE = "03.06";
+
+		const loginScreen = document.getElementById('login-screen');
+		const mainSite = document.getElementById('main-site');
+		const loginForm = document.getElementById('login-form');
+		const codeInput = document.getElementById('code-input');
+		const loginHint = document.getElementById('login-hint');
+
+		codeInput.addEventListener('input', function() {
+			let digits = codeInput.value.replace(/\D/g, '').slice(0, 4);
+			if (digits.length > 2) {
+				codeInput.value = digits.slice(0, 2) + '.' + digits.slice(2);
+			} else {
+				codeInput.value = digits;
+			}
+		});
+
+		loginForm.addEventListener('submit', function(e) {
+			e.preventDefault();
+			const value = codeInput.value.trim();
+			if (value === SECRET_DATE) {
+				loginScreen.classList.add('hidden');
+				mainSite.classList.add('visible');
+				setTimeout(() => {
+					loginScreen.style.display = 'none';
+				}, 700);
+			} else {
+				loginHint.textContent = "That's not quite it... try again 💭";
+				codeInput.value = '';
+				codeInput.focus();
+			}
+		});
+
+		const tabButtons = document.querySelectorAll('.tab-btn');
+		const panels = document.querySelectorAll('.tab-panel');
+
+		function switchTab(tabName) {
+			tabButtons.forEach(b => b.classList.remove('active'));
+			panels.forEach(p => p.classList.remove('active'));
+
+			const targetBtn = document.querySelector('.tab-btn[data-tab="' + tabName + '"]');
+			const targetPanel = document.getElementById('panel-' + tabName);
+			if (targetBtn) targetBtn.classList.add('active');
+			if (targetPanel) targetPanel.classList.add('active');
+
+			targetPanel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}
+
+		tabButtons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				if (btn.disabled) return;
+				switchTab(btn.dataset.tab);
+			});
+		});
+
+		document.querySelectorAll('.next-btn[data-next]').forEach(btn => {
+			btn.addEventListener('click', () => {
+				switchTab(btn.dataset.next);
+			});
+		});
+
+		const track = document.getElementById('gallery-track');
+		if (track) {
+			track.innerHTML += track.innerHTML;
+
+			track.querySelectorAll('video').forEach(video => {
+				video.loop = true;
+				video.playsInline = true;
+				video.autoplay = true;
+				video.play().catch(() => {});
+			});
+		}
+
+		const surpriseImages = [
+			'/birthday/images/image (1).jpg',
+			'/birthday/images/image (2).jpg',
+			'/birthday/images/image (3).jpg',
+			'/birthday/images/image (4).jpg',
+			'/birthday/images/image (5).jpg',
+			'/birthday/images/image (6).jpg',
+			'/birthday/images/image (7).jpg',
+			'/birthday/images/image (8).jpg',
+			'/birthday/images/image (9).jpg',
+			'/birthday/images/image (10).jpg'
+		];
+
+		const surpriseVideos = [
+			'/birthday/videos/9581409d-615f-47cf-ba06-43b446d77b0d.mp4',
+			'/birthday/videos/40387c1a-b72e-4c93-9791-dbf6ae37b9b3.mp4',
+			'/birthday/videos/3778b990-e463-432c-961d-fc19146b0226.mp4',
+			'/birthday/videos/4b16c4e5-9e62-4f49-b545-20591aa17150.mp4'
+		];
+
+		const surpriseBtn = document.getElementById('surpriseBtn');
+		const videoOverlay = document.getElementById('videoOverlay');
+		const loveVideo = document.getElementById('loveVideo');
+		const loveVideoSource = document.getElementById('loveVideoSource');
+		const videoCounter = document.getElementById('videoCounter');
+		const closeVideo = document.getElementById('closeVideo');
+		const nextVideoBtn = document.getElementById('nextVideoBtn');
+		let currentVideoIndex = 0;
+
+		function createFallingHeart() {
+			const heart = document.createElement('div');
+			heart.className = 'falling-heart';
+			heart.textContent = '💖';
+			heart.style.left = Math.random() * window.innerWidth + 'px';
+			heart.style.top = '-50px';
+			heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+			document.body.appendChild(heart);
+
+			let pos = -50;
+			const fallInterval = setInterval(() => {
+				pos += 5;
+				heart.style.top = pos + 'px';
+				if (pos > window.innerHeight) {
+					clearInterval(fallInterval);
+					heart.remove();
+				}
+			}, 20);
+		}
+
+		function showPopupImages() {
+			const usedPositions = [];
+			surpriseImages.forEach((src, i) => {
+				setTimeout(() => {
+					const img = document.createElement('img');
+					img.src = src;
+					img.className = 'popup-image';
+
+					let randomX, randomY, validPosition = false, attempts = 0;
+					while (!validPosition && attempts < 50) {
+						randomX = Math.random() * (window.innerWidth - 150);
+						randomY = Math.random() * (window.innerHeight - 200);
+						validPosition = usedPositions.every(pos =>
+							Math.hypot(randomX - pos.x, randomY - pos.y) >= 250
+						);
+						attempts++;
+					}
+					usedPositions.push({ x: randomX, y: randomY });
+
+					img.style.left = randomX + 'px';
+					img.style.top = randomY + 'px';
+					document.body.appendChild(img);
+				}, i * 300);
+			});
+		}
+
+		function loadVideo(index) {
+			currentVideoIndex = (index + surpriseVideos.length) % surpriseVideos.length;
+			loveVideoSource.src = surpriseVideos[currentVideoIndex];
+			loveVideo.load();
+			loveVideo.play().catch(() => {});
+			videoCounter.textContent = (currentVideoIndex + 1) + ' / ' + surpriseVideos.length;
+
+			const isLastVideo = currentVideoIndex === surpriseVideos.length - 1;
+			nextVideoBtn.textContent = isLastVideo ? 'Fertig ✅' : 'Weiter ❤️';
+		}
+
+		function openVideoOverlay() {
+			loadVideo(0);
+			videoOverlay.classList.add('visible');
+		}
+
+		function closeVideoOverlay() {
+			videoOverlay.classList.remove('visible');
+			loveVideo.pause();
+			loveVideo.currentTime = 0;
+		}
+
+		if (surpriseBtn) {
+			surpriseBtn.addEventListener('click', () => {
+				for (let i = 0; i < 16; i++) {
+					setTimeout(() => createFallingHeart(), i * 100);
+				}
+				showPopupImages();
+				setTimeout(openVideoOverlay, 2600);
+			});
+		}
+
+		nextVideoBtn.addEventListener('click', () => {
+			const isLastVideo = currentVideoIndex === surpriseVideos.length - 1;
+			if (isLastVideo) {
+				closeVideoOverlay();
+			} else {
+				loadVideo(currentVideoIndex + 1);
+			}
+		});
+
+		closeVideo.addEventListener('click', closeVideoOverlay);
+		videoOverlay.addEventListener('click', (e) => {
+			if (e.target === videoOverlay) closeVideoOverlay();
+		});
+
+	</script>
+</body>
+</html>
