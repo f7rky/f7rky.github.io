@@ -38,7 +38,7 @@
 }
 
 .controller.ds4 .touchpad::after {
-  content: "F7RKY";
+  content: "FURKY";
   position: absolute;
   inset: 4px;
   display: flex;
